@@ -1,7 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
+import React from "react";
 
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useMap } from "./hooks";
+
+const App = () => {
+    const { position } = useMap();
+    return (
+        <MapContainer
+            center={position}
+            zoom={11}
+            scrollWheelZoom={true}
+            style={{ minHeight: "80vh", minWidth: "80vw" }}
+        >
+            <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={position}>
+                <Popup>
+                    A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+            </Marker>
+        </MapContainer>
+    );
+};
+
+export default App;
+
+/*
 function App() {
   const [count, setCount] = useState(0)
 
@@ -32,3 +61,4 @@ function App() {
 }
 
 export default App
+*/
