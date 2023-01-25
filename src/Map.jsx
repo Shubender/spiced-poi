@@ -4,9 +4,9 @@ import ReactMapGL, {
     NavigationControl,
     ScaleControl,
 } from "react-map-gl";
+import Map from "react-map-gl";
 
 import { accessToken } from "./mapbox";
-// const { VITE_USERNAME, VITE_STYLE_ID, VITE_ACCESS_TOKEN } = import.meta.env;
 console.log("accessToken: ", accessToken);
 
 const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
@@ -33,7 +33,7 @@ const iconStyle = {
     transform: `translate(${-ICON_SIZE / 2}px,${-ICON_SIZE}px)`,
 };
 
-export default function Map({ places, center }) {
+export default function MyMap({ places, center }) {
     const [viewport, setViewport] = useState({
         latitude: center[1],
         longitude: center[0],
@@ -72,5 +72,16 @@ export default function Map({ places, center }) {
             <NavigationControl style={navStyle} />
             <ScaleControl style={scaleControlStyle} />
         </ReactMapGL>
+
+        // <Map
+        //     initialViewState={{
+        //         longitude: -100,
+        //         latitude: 40,
+        //         zoom: 3.5,
+        //     }}
+        //     style={{ width: "100vw", height: "100vh" }}
+        //     mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
+        //     mapboxAccessToken={accessToken}
+        // />
     );
 }

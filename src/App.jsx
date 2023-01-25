@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PlacesList from "./PlacesList";
 import AddPlaceForm from "./AddPlaceForm";
-import Map from "./Map";
+import MyMap from "./Map";
 
 import "./index.css";
 
@@ -83,10 +83,15 @@ export default function App() {
                     </>
                 )}
             </div>
-            {places.length && <Map center={center} places={places} />}
+            {places.length && <MyMap center={center} places={places} />}
         </div>
     );
 }
+
+
+
+
+
 
 // import { useState } from "react";
 // import reactLogo from "./assets/react.svg";
@@ -120,6 +125,12 @@ export default function App() {
 // };
 
 // export default App;
+
+
+
+
+
+
 
 // import React, { useRef, useEffect, useState } from "react";
 // import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
