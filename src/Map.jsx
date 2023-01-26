@@ -8,7 +8,9 @@ import Map, {
 } from "react-map-gl";
 
 import { accessToken } from "./mapbox";
-console.log("accessToken: ", accessToken);
+// console.log("accessToken: ", accessToken);
+
+import placesData from "../server/data/places.json";
 
 const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
   c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
@@ -44,7 +46,8 @@ export default function MyMap() {
     const [popupInfo, setPopupInfo] = useState(null);
 
     const mapClick = (event) => {
-        console.log("event: ", event.lngLat);
+        console.log("mapClick event: ", event.lngLat);
+        // console.log("placesData: ", placesData);
     };
 
     return (
@@ -58,19 +61,22 @@ export default function MyMap() {
             mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
             mapboxAccessToken={accessToken}
         >
-            <Marker
-                id="marker"
-                latitude={52.50347}
-                longitude={13.41101}
-                color="green"
-                onClick={(e) => {
-                    // If we let the click event propagates to the map, it will immediately close the popup
-                    // with `closeOnClick: true`
-                    e.originalEvent.stopPropagation();
-                    const popUp = "My beautiful popup";
-                    setPopupInfo(popUp);
-                }}
-            />
+            {placesData.map((place) => (
+                <Marker
+                    className="marker" //doesn't work
+                    key={place.id}
+                    latitude={place.latitude}
+                    longitude={place.longitude}
+                    color={place.color}
+                    onClick={(e) => {
+                        e.originalEvent.stopPropagation();
+                        // const popUp = "My beautiful popup";
+                        console.log("place: ", place);
+                        setPopupInfo(place);
+                    }}
+                />
+            ))}
+
             <NavigationControl />
             <ScaleControl position="bottom-right" />
             <GeolocateControl
@@ -81,37 +87,14 @@ export default function MyMap() {
             {popupInfo && (
                 <Popup
                     anchor="top"
-                    latitude={52.50347}
-                    longitude={13.41101}
+                    latitude={popupInfo.latitude}
+                    longitude={popupInfo.longitude}
                     onClose={() => setPopupInfo(null)}
                 >
-                    <div>{popupInfo}</div>
+                    <div>{popupInfo.description}</div>
+                    <img width="100%" src={popupInfo.url} />
                 </Popup>
             )}
         </Map>
-
-        // <ReactMapGL
-        //     {...viewport}
-        //     width="600px"
-        //     height="100%"
-        //     className="map"
-        //     mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
-        //     mapboxAccessToken={accessToken}
-        //     // onViewportChange={(viewport) => setViewport(viewport)}
-        // >
-        //     {/* {places.map(({ id, lngLat }) => (
-        //         <Marker key={id} longitude={lngLat[0]} latitude={lngLat[1]}>
-        //             <svg
-        //                 height={ICON_SIZE}
-        //                 viewBox="0 0 24 24"
-        //                 style={iconStyle}
-        //             >
-        //                 <path d={ICON} />
-        //             </svg>
-        //         </Marker>
-        //     ))} */}
-        //     {/* <NavigationControl style={navStyle} /> */}
-        //     {/* <ScaleControl style={scaleControlStyle} /> */}
-        // </ReactMapGL>
     );
 }
