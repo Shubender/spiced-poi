@@ -4,6 +4,7 @@ import Map, {
     NavigationControl,
     ScaleControl,
     GeolocateControl,
+    Popup,
 } from "react-map-gl";
 
 import { accessToken } from "./mapbox";
@@ -40,6 +41,7 @@ export default function MyMap() {
         longitude: 13.411333242387315,
         zoom: 11,
     });
+    const [popupInfo, setPopupInfo] = useState(null);
 
     const mapClick = (event) => {
         console.log("event: ", event.lngLat);
@@ -56,7 +58,19 @@ export default function MyMap() {
             mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
             mapboxAccessToken={accessToken}
         >
-            <Marker latitude={52.50347} longitude={13.41101} color="red" />
+            <Marker
+                id="marker"
+                latitude={52.50347}
+                longitude={13.41101}
+                color="green"
+                onClick={(e) => {
+                    // If we let the click event propagates to the map, it will immediately close the popup
+                    // with `closeOnClick: true`
+                    e.originalEvent.stopPropagation();
+                    const popUp = "My beautiful popup";
+                    setPopupInfo(popUp);
+                }}
+            />
             <NavigationControl />
             <ScaleControl position="bottom-right" />
             <GeolocateControl
@@ -64,6 +78,16 @@ export default function MyMap() {
                 trackUserLocation="true"
                 showUserHeading="true"
             />
+            {popupInfo && (
+                <Popup
+                    anchor="top"
+                    latitude={52.50347}
+                    longitude={13.41101}
+                    onClose={() => setPopupInfo(null)}
+                >
+                    <div>{popupInfo}</div>
+                </Popup>
+            )}
         </Map>
 
         // <ReactMapGL
