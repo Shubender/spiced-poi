@@ -1,9 +1,4 @@
 import { useState, useEffect } from "react";
-// import ReactMapGL, {
-//     Marker,
-//     NavigationControl,
-//     ScaleControl,
-// } from "react-map-gl";
 import Map, {
     Marker,
     NavigationControl,
@@ -46,11 +41,15 @@ export default function MyMap() {
         zoom: 11,
     });
 
+    const mapClick = (event) => {
+        console.log("event: ", event.lngLat);
+    };
 
     return (
         <Map
             {...viewState}
             onMove={(evt) => setViewState(evt.viewState)}
+            onClick={mapClick}
             width="calc(100% - 400px)"
             height="100%"
             className="map"
