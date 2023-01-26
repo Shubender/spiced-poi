@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
-import ReactMapGL, {
+// import ReactMapGL, {
+//     Marker,
+//     NavigationControl,
+//     ScaleControl,
+// } from "react-map-gl";
+import Map, {
     Marker,
     NavigationControl,
     ScaleControl,
+    GeolocateControl,
 } from "react-map-gl";
-import Map from "react-map-gl";
 
 import { accessToken } from "./mapbox";
 console.log("accessToken: ", accessToken);
@@ -16,15 +21,15 @@ const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,
 const ICON_SIZE = 20;
 const DEFAULT_ZOOM_LEVEL = 4;
 
-const navStyle = {
-    top: "1rem",
-    left: "1rem",
-};
+// const navStyle = {
+//     top: "1rem",
+//     left: "1rem",
+// };
 
-const scaleControlStyle = {
-    bottom: "3rem",
-    left: "1rem",
-};
+// const scaleControlStyle = {
+//     bottom: "3rem",
+//     left: "1rem",
+// };
 
 const iconStyle = {
     cursor: "pointer",
@@ -33,55 +38,57 @@ const iconStyle = {
     transform: `translate(${-ICON_SIZE / 2}px,${-ICON_SIZE}px)`,
 };
 
-export default function MyMap({ places, center }) {
-    const [viewport, setViewport] = useState({
-        latitude: center[1],
-        longitude: center[0],
-        zoom: DEFAULT_ZOOM_LEVEL,
+export default function MyMap() {
+    const [viewState, setViewState] = useState({
+        //SPICED Academy
+        latitude: 52.502183572057696,
+        longitude: 13.411333242387315,
+        zoom: 11,
     });
 
-    useEffect(() => {
-        setViewport({
-            latitude: center[1],
-            longitude: center[0],
-            zoom: DEFAULT_ZOOM_LEVEL,
-        });
-    }, [center]);
 
     return (
-        <ReactMapGL
-            {...viewport}
+        <Map
+            {...viewState}
+            onMove={(evt) => setViewState(evt.viewState)}
             width="calc(100% - 400px)"
             height="100%"
             className="map"
             mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
             mapboxAccessToken={accessToken}
-            onViewportChange={(viewport) => setViewport(viewport)}
         >
-            {places.map(({ id, lngLat }) => (
-                <Marker key={id} longitude={lngLat[0]} latitude={lngLat[1]}>
-                    <svg
-                        height={ICON_SIZE}
-                        viewBox="0 0 24 24"
-                        style={iconStyle}
-                    >
-                        <path d={ICON} />
-                    </svg>
-                </Marker>
-            ))}
-            <NavigationControl style={navStyle} />
-            <ScaleControl style={scaleControlStyle} />
-        </ReactMapGL>
+            <Marker latitude={52.50347} longitude={13.41101} color="red" />
+            <NavigationControl />
+            <ScaleControl position="bottom-right" />
+            <GeolocateControl
+                position="top-left"
+                trackUserLocation="true"
+                showUserHeading="true"
+            />
+        </Map>
 
-        // <Map
-        //     initialViewState={{
-        //         longitude: -100,
-        //         latitude: 40,
-        //         zoom: 3.5,
-        //     }}
-        //     style={{ width: "100vw", height: "100vh" }}
+        // <ReactMapGL
+        //     {...viewport}
+        //     width="600px"
+        //     height="100%"
+        //     className="map"
         //     mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
         //     mapboxAccessToken={accessToken}
-        // />
+        //     // onViewportChange={(viewport) => setViewport(viewport)}
+        // >
+        //     {/* {places.map(({ id, lngLat }) => (
+        //         <Marker key={id} longitude={lngLat[0]} latitude={lngLat[1]}>
+        //             <svg
+        //                 height={ICON_SIZE}
+        //                 viewBox="0 0 24 24"
+        //                 style={iconStyle}
+        //             >
+        //                 <path d={ICON} />
+        //             </svg>
+        //         </Marker>
+        //     ))} */}
+        //     {/* <NavigationControl style={navStyle} /> */}
+        //     {/* <ScaleControl style={scaleControlStyle} /> */}
+        // </ReactMapGL>
     );
 }
