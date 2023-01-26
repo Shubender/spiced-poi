@@ -39,8 +39,8 @@ const iconStyle = {
 export default function MyMap() {
     const [viewState, setViewState] = useState({
         //SPICED Academy
-        latitude: 52.502183572057696,
         longitude: 13.411333242387315,
+        latitude: 52.502183572057696,
         zoom: 11,
     });
     const [popupInfo, setPopupInfo] = useState(null);
@@ -65,8 +65,8 @@ export default function MyMap() {
                 <Marker
                     className="marker" //doesn't work
                     key={place.id}
-                    latitude={place.latitude}
                     longitude={place.longitude}
+                    latitude={place.latitude}
                     color={place.color}
                     onClick={(e) => {
                         e.originalEvent.stopPropagation();
@@ -87,8 +87,8 @@ export default function MyMap() {
             {popupInfo && (
                 <Popup
                     anchor="top"
-                    latitude={popupInfo.latitude}
                     longitude={popupInfo.longitude}
+                    latitude={popupInfo.latitude}
                     onClose={() => setPopupInfo(null)}
                 >
                     <div>{popupInfo.description}</div>

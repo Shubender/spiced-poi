@@ -4,15 +4,15 @@
         "url": "/images/nachbarschaftsgarten.jpg",
         "description": "Nice place for rest and volunteer",
         "color": "green",
-        "latitude": 52.50347,
-        "longitude": 13.41101
+        "longitude": 13.41101,
+        "latitude": 52.50347
     },
     {
         "id": "2",
         "url": "/images/burned-atm.jpg",
         "description": "His life was short but bright",
         "color": "red",
-        "latitude": 52.50093,
-        "longitude": 13.41431
+        "longitude": 13.41431,
+        "latitude": 52.50093
     }
 ]
