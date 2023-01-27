@@ -65,8 +65,8 @@ export default function MyMap() {
                 <Marker
                     className="marker" //doesn't work
                     key={place.id}
-                    longitude={place.longitude}
-                    latitude={place.latitude}
+                    longitude={place.lngLat[0]}
+                    latitude={place.lngLat[1]}
                     color={place.color}
                     onClick={(e) => {
                         e.originalEvent.stopPropagation();
@@ -87,8 +87,8 @@ export default function MyMap() {
             {popupInfo && (
                 <Popup
                     anchor="top"
-                    longitude={popupInfo.longitude}
-                    latitude={popupInfo.latitude}
+                    longitude={popupInfo.lngLat[0]}
+                    latitude={popupInfo.lngLat[1]}
                     onClose={() => setPopupInfo(null)}
                 >
                     <div>{popupInfo.description}</div>
