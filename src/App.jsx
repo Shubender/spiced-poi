@@ -5,23 +5,26 @@ import MyMap from "./Map";
 
 import "./index.css";
 
-const initialPlaces = [
-    {
-        id: 1,
-        name: "Berlin, Germany",
-        lngLat: [13.383309, 52.516806],
-    },
-    {
-        id: 2,
-        name: "Roma, Rome, Italy",
-        lngLat: [12.485855, 41.909468],
-    },
-    {
-        id: 3,
-        name: "Barcelona, Barcelona, Spain",
-        lngLat: [2.177657, 41.401487],
-    },
-];
+import initialPlaces from "../server/data/places.json";
+// console.log("initialPlaces App: ", initialPlaces);
+
+// const initialPlaces = [
+//     {
+//         id: 1,
+//         name: "Berlin, Germany",
+//         lngLat: [13.383309, 52.516806],
+//     },
+//     {
+//         id: 2,
+//         name: "Roma, Rome, Italy",
+//         lngLat: [12.485855, 41.909468],
+//     },
+//     {
+//         id: 3,
+//         name: "Barcelona, Barcelona, Spain",
+//         lngLat: [2.177657, 41.401487],
+//     },
+// ];
 
 async function getPlaces() {
     return new Promise((resolve) => {
@@ -39,8 +42,9 @@ export default function App() {
         setLoading(true);
         (async () => {
             const places = await getPlaces();
+            console.log("places App: ", places);
             setPlaces(places);
-            setCenter(places[1].lngLat);
+            setCenter([13.41133, 52.502183]); //SPICED Academy
             setLoading(false);
         })();
     }, []);
@@ -55,7 +59,7 @@ export default function App() {
 
     function onSubmit(place) {
         // find a strategy to avoid duplicates
-        if (places.find((x) => x.name === place.name)) {
+        if (places.find((x) => x.description === place.description)) {
             alert("Place already existing");
             return;
         }
@@ -87,11 +91,6 @@ export default function App() {
         </div>
     );
 }
-
-
-
-
-
 
 // import { useState } from "react";
 // import reactLogo from "./assets/react.svg";
@@ -125,12 +124,6 @@ export default function App() {
 // };
 
 // export default App;
-
-
-
-
-
-
 
 // import React, { useRef, useEffect, useState } from "react";
 // import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
