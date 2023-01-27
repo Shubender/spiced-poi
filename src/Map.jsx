@@ -10,8 +10,6 @@ import Map, {
 import { accessToken } from "./mapbox";
 // console.log("accessToken: ", accessToken);
 
-// import placesData from "../server/data/places.json";
-
 // const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
 //   c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
 //   C20.1,15.8,20.2,15.8,20.2,15.7z`;
@@ -43,11 +41,16 @@ export default function MyMap({ places, center }) {
         zoom: DEFAULT_ZOOM_LEVEL,
     });
     const [popupInfo, setPopupInfo] = useState(null);
+    const [userClick, setUserClick] = useState(null);
+    const [userPopup, setUserPopup] = useState(false);
 
-    const mapClick = (event) => {
-        console.log("mapClick event: ", event.lngLat);
-    };
+    // const mapClick = (event) => {
+    //     // const clickLngLat = event.lngLat;
+    //     console.log("mapClick event: ", event.lngLat);
+    //     setUserClick(event.lngLat);
+    // };
 
+    console.log("userClick: ", userClick);
     useEffect(() => {
         setViewState({
             longitude: center[0],
@@ -59,7 +62,12 @@ export default function MyMap({ places, center }) {
         <Map
             {...viewState}
             onMove={(evt) => setViewState(evt.viewState)}
-            onClick={mapClick}
+            onClick={(e) => {
+                e.originalEvent.stopPropagation();
+                console.log("mapClick event: ", e.lngLat);
+                setUserClick(e.lngLat);
+                // mapClick(e);
+            }}
             width="calc(100% - 400px)"
             height="100%"
             className="map"
@@ -67,20 +75,58 @@ export default function MyMap({ places, center }) {
             mapboxAccessToken={accessToken}
         >
             {places.map((place) => (
-                <Marker
-                    className="marker" //doesn't work
-                    key={place.id}
-                    longitude={place.lngLat[0]}
-                    latitude={place.lngLat[1]}
-                    color={place.color}
-                    onClick={(e) => {
-                        e.originalEvent.stopPropagation();
-                        // const popUp = "My beautiful popup";
-                        console.log("place: ", place);
-                        setPopupInfo(place);
-                    }}
-                />
+                <>
+                    <Marker
+                        className="marker" //doesn't work
+                        key={place.id}
+                        longitude={place.lngLat[0]}
+                        latitude={place.lngLat[1]}
+                        color={place.color}
+                        onClick={(e) => {
+                            e.originalEvent.stopPropagation();
+                            console.log("Marker click: ", place);
+                            setPopupInfo(place);
+                        }}
+                    />
+                    {popupInfo && (
+                        <Popup
+                            anchor="top"
+                            longitude={popupInfo.lngLat[0]}
+                            latitude={popupInfo.lngLat[1]}
+                            onClose={() => setPopupInfo(null)}
+                        >
+                            <div>{popupInfo.description}</div>
+                            <img width="100%" src={popupInfo.url} />
+                        </Popup>
+                    )}
+                </>
             ))}
+
+            {userClick && (
+                <>
+                    <Marker
+                        className="marker" //doesn't work
+                        longitude={userClick.lng}
+                        latitude={userClick.lat}
+                        color="#ffb400" // Easter Egg for T.
+                        onClick={(e) => {
+                            e.originalEvent.stopPropagation();
+                            console.log("User Marker click: ", e);
+                            setUserPopup(true);
+                        }}
+                    />
+                    {userPopup && (
+                    <Popup
+                        anchor="top"
+                        longitude={userClick.lng}
+                        latitude={userClick.lat}
+                        onClose={() => setUserPopup(false)}
+                    >
+                        <div>Add Place</div>
+                    </Popup>
+                    )}
+                </>
+            )}
 
             <NavigationControl />
             <ScaleControl position="bottom-right" />
@@ -89,17 +135,6 @@ export default function MyMap({ places, center }) {
                 trackUserLocation="true"
                 showUserHeading="true"
             />
-            {popupInfo && (
-                <Popup
-                    anchor="top"
-                    longitude={popupInfo.lngLat[0]}
-                    latitude={popupInfo.lngLat[1]}
-                    onClose={() => setPopupInfo(null)}
-                >
-                    <div>{popupInfo.description}</div>
-                    <img width="100%" src={popupInfo.url} />
-                </Popup>
-            )}
         </Map>
     );
 }
