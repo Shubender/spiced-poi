@@ -75,57 +75,60 @@ export default function MyMap({ places, center }) {
             mapboxAccessToken={accessToken}
         >
             {places.map((place) => (
-                <>
-                    <Marker
-                        className="marker" //doesn't work
-                        key={place.id}
-                        longitude={place.lngLat[0]}
-                        latitude={place.lngLat[1]}
-                        color={place.color}
-                        onClick={(e) => {
-                            e.originalEvent.stopPropagation();
-                            console.log("Marker click: ", place);
-                            setPopupInfo(place);
-                        }}
-                    />
-                    {popupInfo && (
-                        <Popup
-                            anchor="top"
-                            longitude={popupInfo.lngLat[0]}
-                            latitude={popupInfo.lngLat[1]}
-                            onClose={() => setPopupInfo(null)}
-                        >
-                            <div>{popupInfo.description}</div>
-                            <img width="100%" src={popupInfo.url} />
-                        </Popup>
-                    )}
-                </>
+                <Marker
+                    className="marker" //doesn't work
+                    key={place.id}
+                    longitude={place.lngLat[0]}
+                    latitude={place.lngLat[1]}
+                    color={place.color}
+                    onClick={(e) => {
+                        e.originalEvent.stopPropagation();
+                        console.log("Marker click: ", place);
+                        setPopupInfo(place);
+                    }}
+                />
             ))}
 
             {userClick && (
-                <>
-                    <Marker
-                        className="marker" //doesn't work
-                        longitude={userClick.lng}
-                        latitude={userClick.lat}
-                        color="#ffb400" // Easter Egg for T.
-                        onClick={(e) => {
-                            e.originalEvent.stopPropagation();
-                            console.log("User Marker click: ", e);
-                            setUserPopup(true);
-                        }}
-                    />
-                    {userPopup && (
-                    <Popup
-                        anchor="top"
-                        longitude={userClick.lng}
-                        latitude={userClick.lat}
-                        onClose={() => setUserPopup(false)}
-                    >
-                        <div>Add Place</div>
-                    </Popup>
-                    )}
-                </>
+                <Marker
+                    // key={userClick}
+                    className="marker" //doesn't work
+                    longitude={userClick.lng}
+                    latitude={userClick.lat}
+                    color="#ffb400" // Easter Egg for T.
+                    onClick={(e) => {
+                        e.originalEvent.stopPropagation();
+                        console.log("User Marker click: ", e);
+                        setUserPopup(true);
+                    }}
+                />
+            )}
+
+            {popupInfo && (
+                <Popup
+                    // key={place.id + 100}
+                    anchor="top"
+                    longitude={popupInfo.lngLat[0]}
+                    latitude={popupInfo.lngLat[1]}
+                    onClose={() => setPopupInfo(null)}
+                >
+                    <div>{popupInfo.description}</div>
+                    <img width="100%" src={popupInfo.url} />
+                </Popup>
+            )}
+
+            {userPopup && (
+                <Popup
+                    anchor="top"
+                    longitude={userClick.lng}
+                    latitude={userClick.lat}
+                    onClose={() => {
+                        console.log("User Popup: ", userClick);
+                        setUserPopup(false);
+                    }}
+                >
+                    <div>Add Place</div>
+                </Popup>
             )}
 
             <NavigationControl />
