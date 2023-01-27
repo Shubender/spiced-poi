@@ -10,14 +10,14 @@ import Map, {
 import { accessToken } from "./mapbox";
 // console.log("accessToken: ", accessToken);
 
-import placesData from "../server/data/places.json";
+// import placesData from "../server/data/places.json";
 
-const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
-  c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
-  C20.1,15.8,20.2,15.8,20.2,15.7z`;
+// const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
+//   c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
+//   C20.1,15.8,20.2,15.8,20.2,15.7z`;
 
-const ICON_SIZE = 20;
-const DEFAULT_ZOOM_LEVEL = 4;
+// const ICON_SIZE = 20;
+const DEFAULT_ZOOM_LEVEL = 10;
 
 // const navStyle = {
 //     top: "1rem",
@@ -29,26 +29,31 @@ const DEFAULT_ZOOM_LEVEL = 4;
 //     left: "1rem",
 // };
 
-const iconStyle = {
-    cursor: "pointer",
-    fill: "dodgerblue",
-    stroke: "none",
-    transform: `translate(${-ICON_SIZE / 2}px,${-ICON_SIZE}px)`,
-};
+// const iconStyle = {
+//     cursor: "pointer",
+//     fill: "dodgerblue",
+//     stroke: "none",
+//     transform: `translate(${-ICON_SIZE / 2}px,${-ICON_SIZE}px)`,
+// };
 
-export default function MyMap() {
+export default function MyMap({ places, center }) {
     const [viewState, setViewState] = useState({
-        //SPICED Academy
-        longitude: 13.411333242387315,
-        latitude: 52.502183572057696,
-        zoom: 11,
+        longitude: center[0],
+        latitude: center[1],
+        zoom: DEFAULT_ZOOM_LEVEL,
     });
     const [popupInfo, setPopupInfo] = useState(null);
 
     const mapClick = (event) => {
         console.log("mapClick event: ", event.lngLat);
-        // console.log("placesData: ", placesData);
     };
+
+    useEffect(() => {
+        setViewState({
+            longitude: center[0],
+            latitude: center[1],
+        });
+    }, [center]);
 
     return (
         <Map
@@ -61,7 +66,7 @@ export default function MyMap() {
             mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
             mapboxAccessToken={accessToken}
         >
-            {placesData.map((place) => (
+            {places.map((place) => (
                 <Marker
                     className="marker" //doesn't work
                     key={place.id}
