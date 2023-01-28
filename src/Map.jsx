@@ -7,6 +7,8 @@ import Map, {
     Popup,
 } from "react-map-gl";
 
+import Uploader from "./Uploader";
+
 import { accessToken } from "./mapbox";
 // console.log("accessToken: ", accessToken);
 
@@ -15,7 +17,7 @@ import { accessToken } from "./mapbox";
 //   C20.1,15.8,20.2,15.8,20.2,15.7z`;
 
 // const ICON_SIZE = 20;
-const DEFAULT_ZOOM_LEVEL = 10;
+const DEFAULT_ZOOM_LEVEL = 12;
 
 // const navStyle = {
 //     top: "1rem",
@@ -50,7 +52,8 @@ export default function MyMap({ places, center }) {
     //     setUserClick(event.lngLat);
     // };
 
-    console.log("userClick: ", userClick);
+    // console.log("userClick: ", userClick);
+
     useEffect(() => {
         setViewState({
             longitude: center[0],
@@ -64,8 +67,10 @@ export default function MyMap({ places, center }) {
             onMove={(evt) => setViewState(evt.viewState)}
             onClick={(e) => {
                 e.originalEvent.stopPropagation();
-                console.log("mapClick event: ", e.lngLat);
+                // console.log("mapClick event: ", e.lngLat);
                 setUserClick(e.lngLat);
+                setUserPopup(false);
+
                 // mapClick(e);
             }}
             width="calc(100% - 400px)"
@@ -81,6 +86,7 @@ export default function MyMap({ places, center }) {
                     longitude={place.lngLat[0]}
                     latitude={place.lngLat[1]}
                     color={place.color}
+                    z-index={100}
                     onClick={(e) => {
                         e.originalEvent.stopPropagation();
                         console.log("Marker click: ", place);
@@ -91,14 +97,15 @@ export default function MyMap({ places, center }) {
 
             {userClick && (
                 <Marker
-                    // key={userClick}
                     className="marker" //doesn't work
                     longitude={userClick.lng}
                     latitude={userClick.lat}
                     color="#ffb400" // Easter Egg for T.
+                    z-index={100}
+                    // draggable="true"
                     onClick={(e) => {
                         e.originalEvent.stopPropagation();
-                        console.log("User Marker click: ", e);
+                        // console.log("User Marker click: ", e);
                         setUserPopup(true);
                     }}
                 />
@@ -106,7 +113,6 @@ export default function MyMap({ places, center }) {
 
             {popupInfo && (
                 <Popup
-                    // key={place.id + 100}
                     anchor="top"
                     longitude={popupInfo.lngLat[0]}
                     latitude={popupInfo.lngLat[1]}
@@ -118,17 +124,18 @@ export default function MyMap({ places, center }) {
             )}
 
             {userPopup && (
-                <Popup
-                    anchor="top"
-                    longitude={userClick.lng}
-                    latitude={userClick.lat}
-                    onClose={() => {
-                        console.log("User Popup: ", userClick);
-                        setUserPopup(false);
-                    }}
-                >
-                    <div>Add Place</div>
-                </Popup>
+                <Uploader userPopup={userPopup} />
+                // <Popup
+                //     anchor="top"
+                //     longitude={userClick.lng}
+                //     latitude={userClick.lat}
+                //     onClose={() => {
+                //         console.log("User Popup: ", userClick);
+                //         setUserPopup(false);
+                //     }}
+                // >
+                //     <div>Add Place</div>
+                // </Popup>
             )}
 
             <NavigationControl />
