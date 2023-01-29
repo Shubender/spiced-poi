@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import PlacesList from "./PlacesList";
 import AddPlaceForm from "./AddPlaceForm";
 import MyMap from "./Map";
-
+import { Container, Row, Col } from "react-bootstrap";
 import "./index.css";
 
 export default function App() {
@@ -14,8 +14,7 @@ export default function App() {
         fetch("/api/places")
             .then((res) => res.json())
             .then((data) => {
-                const places = data.places;
-                console.log("Success places fetch: ", places);
+                console.log("Success places fetch: ", data.places);
                 setPlaces(data.places);
                 setCenter([13.41133, 52.502183]); //SPICED Academy
             })
