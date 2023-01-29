@@ -14,7 +14,7 @@ app.get("/api/places", async (req, res) => {
 
     db.getPlaces()
         .then((data) => {
-            console.log("getPlaces: ", data.rows);
+            console.log("getPlaces: ", data.rows[0]);
             res.json({ success: true, places: data.rows });
         })
         .catch((err) => {
