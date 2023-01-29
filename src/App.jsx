@@ -8,24 +8,6 @@ import "./index.css";
 import initialPlaces from "../server/data/places.json";
 // console.log("initialPlaces App: ", initialPlaces);
 
-// const initialPlaces = [
-//     {
-//         id: 1,
-//         name: "Berlin, Germany",
-//         lngLat: [13.383309, 52.516806],
-//     },
-//     {
-//         id: 2,
-//         name: "Roma, Rome, Italy",
-//         lngLat: [12.485855, 41.909468],
-//     },
-//     {
-//         id: 3,
-//         name: "Barcelona, Barcelona, Spain",
-//         lngLat: [2.177657, 41.401487],
-//     },
-// ];
-
 async function getPlaces() {
     return new Promise((resolve) => {
         setTimeout(() => resolve(initialPlaces), 500);
@@ -47,6 +29,17 @@ export default function App() {
             setCenter([13.41133, 52.502183]); //SPICED Academy
             setLoading(false);
         })();
+    }, []);
+
+    useEffect(() => {
+        fetch("/api/places")
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("Success places fetch: ", data);
+            })
+            .catch((err) => {
+                console.log("Fetch places data error: ", err);
+            });
     }, []);
 
     function onPlaceClick(place) {
@@ -71,6 +64,35 @@ export default function App() {
         setCenter(place.lngLat);
     }
 
+    function handleSubmitUpload(event) {
+        // console.log("File uploaded");
+        event.preventDefault();
+
+        const formData = new FormData();
+        formData.append("file", this.state.file);
+
+        fetch("/upload", {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log("upload file url", data.userFile.imageurl);
+                this.setState({ imgFromApp: data.userFile.imageurl });
+                this.togglePopup();
+            })
+            .catch((err) => {
+                console.log("handleSubmitUpload error: ", err);
+            });
+    }
+
+    function handleFileChange(event) {
+        // console.log("handleFileChange: ", event.target.files[0]);
+        this.setState({ file: event.target.files[0] });
+    }
+
     return (
         <div className="app">
             <div className="sidebar">
@@ -87,7 +109,14 @@ export default function App() {
                     </>
                 )}
             </div>
-            {places.length && <MyMap center={center} places={places} />}
+            {places.length && (
+                <MyMap
+                    center={center}
+                    places={places}
+                    handleFileChange={handleFileChange}
+                    handleSubmitUpload={handleSubmitUpload}
+                />
+            )}
         </div>
     );
 }
