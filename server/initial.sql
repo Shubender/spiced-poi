@@ -40,3 +40,35 @@ INSERT INTO places (url, description, color, longitude, latitude) VALUES (
     '13.41431',
     '52.50093'
 );
+
+INSERT INTO places (url, description, color, longitude, latitude) VALUES (
+    '/images/old-bike.jpg',
+    'Old rusty bike',
+    'blue',
+    '13.40490',
+    '52.51675'
+);
+
+INSERT INTO places (url, description, color, longitude, latitude) VALUES (
+    '/images/make-love-meduza.jpg',
+    'Make love (c) Meduza',
+    'blue',
+    '13.43927',
+    '52.50090'
+);
+
+INSERT INTO places (url, description, color, longitude, latitude) VALUES (
+    '/images/dogs-rest.jpg',
+    'You are shopping, your buddy is resting',
+    'green',
+    '13.36770',
+    '52.46971'
+);
+
+INSERT INTO places (url, description, color, longitude, latitude) VALUES (
+    '/images/bookcase.jpg',
+    'The bookcase',
+    'green',
+    '13.41993',
+    '52.55668'
+);
