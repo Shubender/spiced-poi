@@ -8,9 +8,11 @@ require("dotenv").config();
 const { AWS_KEY, AWS_SECRET, AWS_BUCKET } = process.env;
 
 const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, path.join(__dirname, "..", "public/images"));
+    },
     filename: (req, file, callback) => {
-        uidSafe(24).then((uid) => {
-            // second argument in callback() specifies the file name
+        uidSafe(12).then((uid) => {
             callback(null, uid + path.extname(file.originalname));
         });
     },
