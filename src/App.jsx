@@ -11,7 +11,7 @@ export default function App() {
 
     const onPlaceUpload = () => {
         loadMarkers();
-    }
+    };
 
     const loadMarkers = () => {
         fetch("/api/places")
@@ -24,7 +24,7 @@ export default function App() {
             .catch((err) => {
                 console.log("Fetch places data error: ", err);
             });
-    }
+    };
     useEffect(() => {
         loadMarkers();
     }, []);
@@ -69,7 +69,7 @@ export default function App() {
                     )}
                 </Col>
                 <Col sm={8}>
-                    <div style={{ height: "80vh", width: "100%" }}>
+                    <div style={{ height: "95vh", width: "100%" }}>
                         {places.length && (
                             <MyMap
                                 center={center}
