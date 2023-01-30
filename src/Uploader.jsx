@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 
 export default function Uploader(props) {
     const [show, setShow] = useState(props.userPopup);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const handleClose = () => setShow(false);
     // const handleShow = () => setShow(true);
@@ -23,18 +24,50 @@ export default function Uploader(props) {
         }
     }
 
+    function handleSubmitUpload(event) {
+        event.preventDefault();
+        console.log("File uploaded");
+
+        const formData = new FormData(event.target);
+        formData.append("lat", props.userClick.lat);
+        formData.append("lng", props.userClick.lng);
+
+
+        fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log("upload file data:", data);
+                // this.setState({ imgFromApp: data.userFile.imageurl });
+                setShow(false);
+            })
+            .catch((err) => {
+                console.log("handleSubmitUpload error: ", err);
+            });
+    }
+
+    function handleFileChange(event) {
+        console.log("handleFileChange: ", event);
+        setSelectedFile(event.target.files[0]);
+    }
+
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Add new place</Modal.Title>
             </Modal.Header>
-            <Form onSubmit={props.handleSubmitUpload}>
+            <Form onSubmit={handleSubmitUpload}>
                 <Form.Group className="m-3 w-75">
                     <Form.Label>Description</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Type your thought about this place"
                         required
+                        name="description"
                         id="validationTextarea"
                         className="form-control"
                         onKeyUp={checkInput}
@@ -49,7 +82,7 @@ export default function Uploader(props) {
                         type="file"
                         name="file"
                         accept="image/*"
-                        onChange={props.handleFileChange}
+                        onChange={handleFileChange}
                         required
                     />
                     <Form.Text id="lngLatText" muted>
