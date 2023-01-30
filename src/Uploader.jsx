@@ -82,7 +82,7 @@ export default function Uploader(props) {
                 </Form.Group>
                 <Form.Group className="m-3 w-75">
                     <Form.Label>Choose type of place</Form.Label>
-                    <Form>
+                    <div>
                         {["radio"].map((type) => (
                             <div key={`inline-${type}`} className="mb-3">
                                 <Form.Check
@@ -120,7 +120,7 @@ export default function Uploader(props) {
                                 />
                             </div>
                         ))}
-                    </Form>
+                    </div>
                 </Form.Group>
                 <Form.Group className="m-3 w-75">
                     <Form.Label>Upload your pic here</Form.Label>
