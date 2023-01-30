@@ -47,7 +47,7 @@ app.post(
         const filename = req.file.filename;
         const lng = req.body.lng;
         const lat = req.body.lat;
-        const color = 'blue';
+        const color = req.body.color || "yellow";
         db.createPlace(imgUrl, description, filename, lng, lat, color).then(
             (data) => {
                 if (req.file) {

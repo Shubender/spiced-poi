@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 export default function Uploader(props) {
     const [show, setShow] = useState(props.userPopup);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [color, setColor] = useState('');
+
 
     const handleClose = () => setShow(false);
     // const handleShow = () => setShow(true);
@@ -31,6 +33,8 @@ export default function Uploader(props) {
         const formData = new FormData(event.target);
         formData.append("lat", props.userClick.lat);
         formData.append("lng", props.userClick.lng);
+        formData.append("color", color);
+
 
         fetch("/api/upload", {
             method: "POST",
@@ -77,6 +81,48 @@ export default function Uploader(props) {
                     </Form.Text>
                 </Form.Group>
                 <Form.Group className="m-3 w-75">
+                    <Form.Label>Choose type of place</Form.Label>
+                    <Form>
+                        {["radio"].map((type) => (
+                            <div key={`inline-${type}`} className="mb-3">
+                                <Form.Check
+                                    style={{ color: "blue" }}
+                                    inline
+                                    label="Fancy"
+                                    name="group1"
+                                    type={type}
+                                    id={`inline-${type}-1`}
+                                    onChange={() => {
+                                        setColor("blue");
+                                    }}
+                                />
+                                <Form.Check
+                                    style={{ color: "green" }}
+                                    inline
+                                    label="Useful"
+                                    name="group1"
+                                    type={type}
+                                    id={`inline-${type}-2`}
+                                    onChange={() => {
+                                        setColor("green");
+                                    }}
+                                />
+                                <Form.Check
+                                    style={{ color: "red" }}
+                                    inline
+                                    label="Broken"
+                                    name="group1"
+                                    type={type}
+                                    id={`inline-${type}-3`}
+                                    onChange={() => {
+                                        setColor("red");
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </Form>
+                </Form.Group>
+                <Form.Group className="m-3 w-75">
                     <Form.Label>Upload your pic here</Form.Label>
                     <Form.Control
                         type="file"
@@ -90,6 +136,7 @@ export default function Uploader(props) {
                         {props.userClick.lat.toFixed(5)}
                     </Form.Text>
                 </Form.Group>
+
                 <Button variant="outline-primary" type="submit" className="m-3">
                     Upload
                 </Button>
