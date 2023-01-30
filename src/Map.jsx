@@ -19,7 +19,7 @@ import Uploader from "./Uploader";
 import { accessToken } from "./mapbox";
 // console.log("accessToken: ", accessToken);
 
-const DEFAULT_ZOOM_LEVEL = 12;
+const DEFAULT_ZOOM_LEVEL = 11;
 
 export default function MyMap({ places, center, onPlaceUpload }) {
     const [viewState, setViewState] = useState({
@@ -82,7 +82,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
                     longitude={place.longitude}
                     latitude={place.latitude}
                     color={place.color}
-                    z-index={100}
+                    z-index={20}
                     onClick={(e) => {
                         e.originalEvent.stopPropagation();
                         console.log("Marker click: ", place);
@@ -98,7 +98,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
                     longitude={userClick.lng}
                     latitude={userClick.lat}
                     color="#ffb400" // Easter Egg for T.
-                    z-index={100}
+                    z-index={10}
                     // draggable="true"
                     onClick={(e) => {
                         e.originalEvent.stopPropagation();
@@ -115,7 +115,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
                             <Modal.Title>Look and find it!</Modal.Title>
                         </Modal.Header>
                         <Modal.Body className="rounded mx-auto">
-                            <p>{popupInfo.description}</p>
+                            <h5>{popupInfo.description}</h5>
                             <Image
                                 // className="rounded mx-auto d-block"
                                 src={popupInfo.url}
