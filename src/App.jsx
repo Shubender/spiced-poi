@@ -39,10 +39,10 @@ export default function App() {
 
     function onSubmit(place) {
         // find a strategy to avoid duplicates
-        if (places.find((x) => x.description === place.description)) {
-            alert("Place already existing");
-            return;
-        }
+        // if (places.find((x) => x.description === place.description)) {
+        //     alert("Place already existing");
+        //     return;
+        // }
         const newPlace = {
             ...place,
             id: places[places.length - 1].id + 1,
@@ -54,7 +54,11 @@ export default function App() {
     return (
         <Container className="app p-3" fluid>
             <Row>
-                <Col sm={4} className="sidebar">
+                <Col
+                    sm={3}
+                    className="sidebar"
+                    style={{ maxHeight: "90vh", overflow: "auto" }}
+                >
                     {isLoading ? (
                         <p>Loading...</p>
                     ) : (
@@ -68,7 +72,7 @@ export default function App() {
                         </>
                     )}
                 </Col>
-                <Col sm={8}>
+                <Col sm={9}>
                     <div style={{ height: "95vh", width: "100%" }}>
                         {places.length && (
                             <MyMap
