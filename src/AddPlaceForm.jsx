@@ -13,7 +13,7 @@ export default function AddPlaceForm({ onSubmit }) {
             return;
         }
         onSubmit({
-            name: currentSuggestion.place_name,
+            description: currentSuggestion.place_name,
             lngLat: currentSuggestion.geometry.coordinates,
         });
         setCurrentSuggestion({});
@@ -40,7 +40,7 @@ export default function AddPlaceForm({ onSubmit }) {
 
     return (
         <section className="add-place">
-            <h2>Add new place</h2>
+            <h2>Find Place</h2>
             <form onSubmit={_onSubmit} autoComplete="off">
                 <input
                     type="text"
@@ -49,7 +49,7 @@ export default function AddPlaceForm({ onSubmit }) {
                     value={text}
                     onChange={onChange}
                     minLength={3}
-                    placeholder="Type the place you want to go..."
+                    placeholder="Type the place you want to go"
                 />
                 <button type="submit">Add Place</button>
                 <ul>

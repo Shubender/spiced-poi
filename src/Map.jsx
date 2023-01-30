@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Map, {
     Marker,
     NavigationControl,
@@ -6,6 +6,8 @@ import Map, {
     GeolocateControl,
     Popup,
 } from "react-map-gl";
+// import Geocoder from "react-map-gl-geocoder";
+// import GeocoderControl from "./geocoder-control";
 
 import Uploader from "./Uploader";
 
@@ -30,6 +32,24 @@ export default function MyMap({ places, center, onPlaceUpload }) {
             latitude: center[1],
         });
     }, [center]);
+
+    // const mapRef = useRef();
+    // const handleViewportChange = useCallback(
+    //     (newViewport) => setViewport(newViewport),
+    //     []
+    // );
+
+    // const handleGeocoderViewportChange = useCallback(
+    //     (newViewport) => {
+    //         const geocoderDefaultOverrides = { transitionDuration: 1000 };
+
+    //         return handleViewportChange({
+    //             ...newViewport,
+    //             ...geocoderDefaultOverrides,
+    //         });
+    //     },
+    //     [handleViewportChange]
+    // );
 
     return (
         <Map
@@ -108,6 +128,16 @@ export default function MyMap({ places, center, onPlaceUpload }) {
                 trackUserLocation="true"
                 showUserHeading="true"
             />
+            {/* <Geocoder
+                mapRef={mapRef}
+                onViewportChange={handleGeocoderViewportChange}
+                mapboxAccessToken={accessToken}
+                position="top-left"
+            /> */}
+            {/* <GeocoderControl
+                mapboxAccessToken={accessToken}
+                position="top-left"
+            /> */}
         </Map>
     );
 }
