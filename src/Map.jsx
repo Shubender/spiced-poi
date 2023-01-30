@@ -6,6 +6,11 @@ import Map, {
     GeolocateControl,
     Popup,
 } from "react-map-gl";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
+
 // import Geocoder from "react-map-gl-geocoder";
 // import GeocoderControl from "./geocoder-control";
 
@@ -25,6 +30,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
     const [popupInfo, setPopupInfo] = useState(null);
     const [userClick, setUserClick] = useState(null);
     const [userPopup, setUserPopup] = useState(false);
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         setViewState({
@@ -81,6 +87,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
                         e.originalEvent.stopPropagation();
                         console.log("Marker click: ", place);
                         setPopupInfo(place);
+                        setShow(true);
                     }}
                 />
             ))}
@@ -102,15 +109,45 @@ export default function MyMap({ places, center, onPlaceUpload }) {
             )}
 
             {popupInfo && (
-                <Popup
-                    anchor="top"
-                    longitude={popupInfo.longitude}
-                    latitude={popupInfo.latitude}
-                    onClose={() => setPopupInfo(null)}
-                >
-                    <div>{popupInfo.description}</div>
-                    <img width="100%" src={popupInfo.url} />
-                </Popup>
+                <>
+                    <Modal show={show} onHide={() => setShow(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Look and find it!</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="rounded mx-auto">
+                            <p>{popupInfo.description}</p>
+                            <Image
+                                // className="rounded mx-auto d-block"
+                                src={popupInfo.url}
+                                // thumbnail
+                                // rounded
+                                style={{
+                                    border: "2px solid black",
+                                    borderRadius: "10px",
+                                    maxHeight: "400px",
+                                    maxWidth: "300px",
+                                }}
+                            />
+                        </Modal.Body>
+                        {/* <Modal.Footer>
+                            <Button
+                                variant="secondary"
+                                onClick={() => setShow(false)}
+                            >
+                                Close
+                            </Button>
+                        </Modal.Footer> */}
+                    </Modal>
+                    {/* <Popup
+                        anchor="top"
+                        longitude={popupInfo.longitude}
+                        latitude={popupInfo.latitude}
+                        onClose={() => setPopupInfo(null)}
+                    >
+                        <div>{popupInfo.description}</div>
+                        <img width="100%" src={popupInfo.url} />
+                    </Popup> */}
+                </>
             )}
 
             {userPopup && (
