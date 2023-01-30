@@ -34,7 +34,7 @@ app.post(
     function (req, res) {
         // If nothing went wrong the file is already in the uploads directory
         // console.log("amazon link from server: ", res.locals.fileUrl);
-        // console.log("req.file: ", req.file);
+        console.log("req.file: ", req.file);
         console.log(
             "User input (server): ",
             req.body.description,
@@ -44,7 +44,7 @@ app.post(
 
         const imgUrl = res.locals.fileUrl;
         const description = req.body.description;
-        const filename = req.body.filename;
+        const filename = req.file.filename;
         const lng = req.body.lng;
         const lat = req.body.lat;
         const color = 'blue';
