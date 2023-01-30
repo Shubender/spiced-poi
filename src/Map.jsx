@@ -14,7 +14,7 @@ import { accessToken } from "./mapbox";
 
 const DEFAULT_ZOOM_LEVEL = 12;
 
-export default function MyMap({ places, center }) {
+export default function MyMap({ places, center, onPlaceUpload }) {
     const [viewState, setViewState] = useState({
         longitude: center[0],
         latitude: center[1],
@@ -43,8 +43,8 @@ export default function MyMap({ places, center }) {
 
                 // mapClick(e);
             }}
-            width="calc(100% - 400px)"
-            height="100%"
+            // width="100%"
+            // height="100%"
             className="map"
             mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
             mapboxAccessToken={accessToken}
@@ -94,7 +94,11 @@ export default function MyMap({ places, center }) {
             )}
 
             {userPopup && (
-                <Uploader userPopup={userPopup} userClick={userClick} />
+                <Uploader
+                    userPopup={userPopup}
+                    userClick={userClick}
+                    onPlaceUpload={onPlaceUpload}
+                />
             )}
 
             <NavigationControl />

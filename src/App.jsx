@@ -9,7 +9,11 @@ export default function App() {
     const [places, setPlaces] = useState([]);
     const [center, setCenter] = useState([]);
 
-    useEffect(() => {
+    const onPlaceUpload = () => {
+        loadMarkers();
+    }
+
+    const loadMarkers = () => {
         fetch("/api/places")
             .then((res) => res.json())
             .then((data) => {
@@ -20,6 +24,9 @@ export default function App() {
             .catch((err) => {
                 console.log("Fetch places data error: ", err);
             });
+    }
+    useEffect(() => {
+        loadMarkers();
     }, []);
 
     function onPlaceClick(place) {
@@ -67,6 +74,7 @@ export default function App() {
                             <MyMap
                                 center={center}
                                 places={places}
+                                onPlaceUpload={onPlaceUpload}
                             />
                         )}
                     </div>

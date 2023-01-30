@@ -32,7 +32,6 @@ export default function Uploader(props) {
         formData.append("lat", props.userClick.lat);
         formData.append("lng", props.userClick.lng);
 
-
         fetch("/api/upload", {
             method: "POST",
             body: formData,
@@ -44,6 +43,7 @@ export default function Uploader(props) {
                 console.log("upload file data:", data);
                 // this.setState({ imgFromApp: data.userFile.imageurl });
                 setShow(false);
+                props.onPlaceUpload();
             })
             .catch((err) => {
                 console.log("handleSubmitUpload error: ", err);
