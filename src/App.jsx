@@ -68,14 +68,14 @@ export default function App() {
                                 onPlaceClick={onPlaceClick}
                                 // onPlaceRemove={onPlaceRemove}
                             />
-                            <AddPlaceForm onSubmit={onSubmit} />{" "}
+                            {/* <AddPlaceForm onSubmit={onSubmit} />{" "} */}
                         </>
                     )}
                 </Col>
                 <Col sm={9}>
                     <div style={{ height: "95vh", width: "100%" }}>
                         {places.length && (
-                            <MyMap
+                            <MyMap 
                                 center={center}
                                 places={places}
                                 onPlaceUpload={onPlaceUpload}

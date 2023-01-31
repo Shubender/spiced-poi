@@ -7,10 +7,12 @@ import { useState, useEffect } from "react";
 export default function Uploader(props) {
     const [show, setShow] = useState(props.userPopup);
     const [selectedFile, setSelectedFile] = useState(null);
-    const [color, setColor] = useState('');
+    const [color, setColor] = useState("");
 
-
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        props.setUserPopup(false);
+    };
     // const handleShow = () => setShow(true);
 
     function checkInput(event) {
@@ -34,7 +36,6 @@ export default function Uploader(props) {
         formData.append("lat", props.userClick.lat);
         formData.append("lng", props.userClick.lng);
         formData.append("color", color);
-
 
         fetch("/api/upload", {
             method: "POST",
@@ -61,13 +62,17 @@ export default function Uploader(props) {
 
     return (
         <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
+            <Modal.Header style={{ background: "#f2f2f2" }} closeButton>
                 <Modal.Title>Add new place</Modal.Title>
             </Modal.Header>
-            <Form onSubmit={handleSubmitUpload}>
+            <Form
+                style={{ background: "#f2f2f2" }}
+                onSubmit={handleSubmitUpload}
+            >
                 <Form.Group className="m-3 w-75">
                     <Form.Label>Description</Form.Label>
                     <Form.Control
+                        style={{ background: "#f2f2f2" }}
                         type="text"
                         placeholder="Type your thought about this place"
                         required
@@ -125,6 +130,7 @@ export default function Uploader(props) {
                 <Form.Group className="m-3 w-75">
                     <Form.Label>Upload your pic here</Form.Label>
                     <Form.Control
+                        style={{ background: "#f2f2f2" }}
                         type="file"
                         name="file"
                         accept="image/*"

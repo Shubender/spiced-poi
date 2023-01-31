@@ -12,7 +12,18 @@ export default function PlacesList({ places, onPlaceClick, onPlaceRemove }) {
                     //     </span>
                     //     {/* <button onClick={() => onPlaceRemove(place)}>×</button> */}
                     // </li>
-                    <ListGroup.Item action variant="info" key={place.id}>
+                    <ListGroup.Item
+                        style={{
+                            // backgroundColor: "transparent",
+                            border: "2px solid black",
+                            borderRadius: "10px",
+                            margin: "5px",
+                            color: "black",
+                        }}
+                        action
+                        variant="secondary"
+                        key={place.id}
+                    >
                         <span onClick={() => onPlaceClick(place)}>
                             {place.description}
                         </span>

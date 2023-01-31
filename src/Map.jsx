@@ -59,6 +59,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
 
     return (
         <Map
+            className="map rounded"
             {...viewState}
             onMove={(evt) => setViewState(evt.viewState)}
             onClick={(e) => {
@@ -71,18 +72,17 @@ export default function MyMap({ places, center, onPlaceUpload }) {
             }}
             // width="100%"
             // height="100%"
-            className="map"
+            // className="map"
             mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
             mapboxAccessToken={accessToken}
         >
             {places.map((place) => (
                 <Marker
-                    className="marker" //doesn't work
                     key={place.id}
                     longitude={place.longitude}
                     latitude={place.latitude}
                     color={place.color}
-                    z-index={20}
+                    style={{ cursor: "pointer", zIndex: 999 }}
                     onClick={(e) => {
                         e.originalEvent.stopPropagation();
                         console.log("Marker click: ", place);
@@ -98,7 +98,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
                     longitude={userClick.lng}
                     latitude={userClick.lat}
                     color="#ffb400" // Easter Egg for T.
-                    z-index={10}
+                    style={{ cursor: "pointer", zIndex: 999 }}
                     // draggable="true"
                     onClick={(e) => {
                         e.originalEvent.stopPropagation();
@@ -111,42 +111,38 @@ export default function MyMap({ places, center, onPlaceUpload }) {
             {popupInfo && (
                 <>
                     <Modal show={show} onHide={() => setShow(false)}>
-                        <Modal.Header closeButton>
+                        <Modal.Header
+                            style={{
+                                background: "#f2f2f2",
+                            }}
+                            closeButton
+                        >
                             <Modal.Title>Look and find it!</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body className="rounded mx-auto">
-                            <h5>{popupInfo.description}</h5>
+                        <Modal.Body
+                            style={{ background: "#f2f2f2" }}
+                            className="rounded"
+                        >
+                            <h5
+                                style={{
+                                    textAlign: "center",
+                                }}
+                            >
+                                {popupInfo.description}
+                            </h5>
                             <Image
-                                // className="rounded mx-auto d-block"
                                 src={popupInfo.url}
-                                // thumbnail
-                                // rounded
                                 style={{
                                     border: "2px solid black",
                                     borderRadius: "10px",
                                     maxHeight: "400px",
                                     maxWidth: "300px",
+                                    display: "block",
+                                    margin: "auto",
                                 }}
                             />
                         </Modal.Body>
-                        {/* <Modal.Footer>
-                            <Button
-                                variant="secondary"
-                                onClick={() => setShow(false)}
-                            >
-                                Close
-                            </Button>
-                        </Modal.Footer> */}
                     </Modal>
-                    {/* <Popup
-                        anchor="top"
-                        longitude={popupInfo.longitude}
-                        latitude={popupInfo.latitude}
-                        onClose={() => setPopupInfo(null)}
-                    >
-                        <div>{popupInfo.description}</div>
-                        <img width="100%" src={popupInfo.url} />
-                    </Popup> */}
                 </>
             )}
 
@@ -155,6 +151,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
                     userPopup={userPopup}
                     userClick={userClick}
                     onPlaceUpload={onPlaceUpload}
+                    setUserPopup={setUserPopup}
                 />
             )}
 
@@ -162,8 +159,8 @@ export default function MyMap({ places, center, onPlaceUpload }) {
             <ScaleControl position="bottom-right" />
             <GeolocateControl
                 position="top-left"
-                trackUserLocation="true"
-                showUserHeading="true"
+                // trackUserLocation="true"
+                // showUserHeading="true"
             />
             {/* <Geocoder
                 mapRef={mapRef}
