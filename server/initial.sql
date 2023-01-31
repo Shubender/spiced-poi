@@ -61,7 +61,7 @@ INSERT INTO places (url, description, color, longitude, latitude) VALUES (
     '/images/dogs-rest.jpg',
     'You are shopping, your buddy is resting',
     'green',
-    '13.36770',
+    '13.36771',
     '52.46971'
 );
 
