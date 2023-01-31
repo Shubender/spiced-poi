@@ -45,7 +45,7 @@ INSERT INTO places (url, description, color, longitude, latitude) VALUES (
     '/images/old-bike.jpg',
     'Old rusty bike',
     'blue',
-    '13.40490',
+    '13.40491',
     '52.51675'
 );
 
@@ -54,7 +54,7 @@ INSERT INTO places (url, description, color, longitude, latitude) VALUES (
     'Make love (c) Meduza',
     'blue',
     '13.43927',
-    '52.50090'
+    '52.50091'
 );
 
 INSERT INTO places (url, description, color, longitude, latitude) VALUES (
