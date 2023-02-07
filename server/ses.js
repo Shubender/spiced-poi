@@ -10,7 +10,7 @@ const ses = new aws.SES({
 });
 
 const emailRes = () => {
-    console.log("AWS_REGION : ", AWS_REGION);
+    // console.log("AWS_REGION : ", AWS_REGION);
     return ses
         .sendEmail({
             Source: "Funky Chicken <midi.pancake@spicedling.email>",

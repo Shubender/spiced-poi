@@ -39,6 +39,7 @@ export default function App() {
 
     function onSubmit(place) {
         // find a strategy to avoid duplicates
+        // made check with coordinates?
         // if (places.find((x) => x.description === place.description)) {
         //     alert("Place already existing");
         //     return;

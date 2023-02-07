@@ -39,24 +39,6 @@ export default function MyMap({ places, center, onPlaceUpload }) {
         });
     }, [center]);
 
-    // const mapRef = useRef();
-    // const handleViewportChange = useCallback(
-    //     (newViewport) => setViewport(newViewport),
-    //     []
-    // );
-
-    // const handleGeocoderViewportChange = useCallback(
-    //     (newViewport) => {
-    //         const geocoderDefaultOverrides = { transitionDuration: 1000 };
-
-    //         return handleViewportChange({
-    //             ...newViewport,
-    //             ...geocoderDefaultOverrides,
-    //         });
-    //     },
-    //     [handleViewportChange]
-    // );
-
     return (
         <Map
             className="map rounded"
@@ -67,12 +49,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
                 console.log("mapClick event: ", e.lngLat);
                 setUserClick(e.lngLat);
                 setUserPopup(false);
-
-                // mapClick(e);
             }}
-            // width="100%"
-            // height="100%"
-            // className="map"
             mapStyle="mapbox://styles/shubender/cldbk4pw9006y01qo94oielfs"
             mapboxAccessToken={accessToken}
         >
@@ -157,21 +134,7 @@ export default function MyMap({ places, center, onPlaceUpload }) {
 
             <NavigationControl />
             <ScaleControl position="bottom-right" />
-            <GeolocateControl
-                position="top-left"
-                // trackUserLocation="true"
-                // showUserHeading="true"
-            />
-            {/* <Geocoder
-                mapRef={mapRef}
-                onViewportChange={handleGeocoderViewportChange}
-                mapboxAccessToken={accessToken}
-                position="top-left"
-            /> */}
-            {/* <GeocoderControl
-                mapboxAccessToken={accessToken}
-                position="top-left"
-            /> */}
+            <GeolocateControl position="top-left" />
         </Map>
     );
 }

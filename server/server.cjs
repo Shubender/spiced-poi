@@ -6,9 +6,6 @@ const db = require("./db.cjs");
 const path = require("path");
 const { uploader, fileUpload } = require("./file-upload.cjs");
 
-// const upload = require("../src/Map");
-// require { uploader, fileUpload } from '../src/Map'
-
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -32,15 +29,13 @@ app.post(
     uploader.single("file"),
     fileUpload,
     function (req, res) {
-        // If nothing went wrong the file is already in the uploads directory
-        // console.log("amazon link from server: ", res.locals.fileUrl);
-        console.log("req.file: ", req.file);
-        console.log(
-            "User input (server): ",
-            req.body.description,
-            req.body.lng,
-            req.body.lat
-        );
+        // console.log("req.file: ", req.file);
+        // console.log(
+        //     "User input (server): ",
+        //     req.body.description,
+        //     req.body.lng,
+        //     req.body.lat
+        // );
 
         const imgUrl = res.locals.fileUrl;
         const description = req.body.description;
